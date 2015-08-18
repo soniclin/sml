@@ -18,6 +18,11 @@ public:
 
 	static const T& pi();
 
+	static const bool is_zero(const T& input)
+	{
+		return std::abs(input - static_cast<T>(0)) < Math<T>::eps();
+	}
+
 private:
 
 	Math();
