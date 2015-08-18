@@ -46,7 +46,8 @@ public:
 
 
 #pragma region Constructors
-	
+
+
 	VectorX(const T& value = 0)
 	{
 		this->initialize(value);
@@ -55,24 +56,21 @@ public:
 
 	VectorX(const std::initializer_list<T>& list)
 	{
-		
-		auto pointer = data();
 		auto iter = list.begin();
 		auto end = list.end();
-		auto test = N;
-		for (Base::size_type index = 0; index != N || iter != end; ++index)
+		
+		for (auto this_iter = this->begin(); this_iter != this->end() && iter != end; ++this_iter)
 		{
-			*(pointer + index) = *iter++;
+			*this_iter = *iter++;
 		}
 	}
 
 
 	void initialize(const T& value)
 	{
-		auto pointer = data();
-		for (Base::size_type index = 0; index != N; ++index)
+		for (auto iter = begin(); iter != end(); ++iter)
 		{
-			*(pointer + index) = value;
+			*iter = value;
 		}
 	}
 
@@ -90,16 +88,37 @@ public:
 	/// Assignment operators
 
 	template<typename T2, Base::size_type N2>
-	VectorX<T, N>& operator=(const VectorX<T2, N2>& rhs) = default;
+	VectorX<T, N>& operator=(const VectorX<T2, N2>& rhs)
+	{
+		Base::size_type d = N > N2 ? N : N2;
+		auto iter = begin();
+		for (Base::size_type index = 0; index != d; ++index)
+		{
+			*iter++ = rhs[index];
+		}
+
+		return *this;
+	}
 
 	template<typename T2, Base::size_type N2>
 	VectorX<T, N>& operator+=(const VectorX<T2, N2>& rhs)
 	{
 		Base::size_type d = N > N2 ? N : N2;
-		auto pointer = data();
+		auto iter = begin();
 		for (Base::size_type index = 0; index != d; ++index)
 		{
-			*(pointer+index) += rhs[index];
+			*iter++ += rhs[index];
+		}
+
+		return *this;
+	}
+
+	VectorX<T, N>& operator+=(const T& rhs)
+	{
+		auto iter = begin();
+		for (Base::size_type index = 0; index != N; ++index)
+		{
+			*iter++ += rhs;
 		}
 
 		return *this;
@@ -109,10 +128,21 @@ public:
 	VectorX<T, N>& operator-=(const VectorX<T2, N2>& rhs)
 	{
 		Base::size_type d = N > N2 ? N : N2;
-		auto pointer = data();
+		auto iter = begin();
 		for (Base::size_type index = 0; index != d; ++index)
 		{
-			*(pointer + index) -= rhs[index];
+			*iter++ -= rhs[index];
+		}
+
+		return *this;
+	}
+
+	VectorX<T, N>& operator-=(const T& rhs)
+	{
+		auto iter = begin();
+		for (Base::size_type index = 0; index != N; ++index)
+		{
+			*iter++ -= rhs;
 		}
 
 		return *this;
@@ -122,10 +152,10 @@ public:
 	template<typename T2>
 	VectorX<T, N>& operator*=(const T2& rhs)
 	{
-		auto pointer = data();
+		auto iter = begin();
 		for (Base::size_type index = 0; index != N; ++index)
 		{
-			*(pointer + index) *= rhs;
+			*iter++ *= rhs;
 		}
 
 		return *this;
@@ -150,10 +180,10 @@ public:
 			std::exit(1);
 		}
 
-		auto pointer = data();
+		auto iter = begin();
 		for (Base::size_type index = 0; index != N; ++index)
 		{
-			*(pointer + index) /= rhs;
+			*iter++ /= rhs;
 		}
 
 		return *this;
@@ -174,7 +204,7 @@ public:
 
 
 	/// Explicit arithmetic operators
-	const T VectorX<T, N>::dot(const VectorX& rhs) const
+	const T dot(const VectorX& rhs) const
 	{
 		auto ret = T();
 
@@ -185,13 +215,13 @@ public:
 	}
 
 	/// Abs, only for double, float, int
-	const T VectorX<T, N>::abs() const
+	const T abs() const
 	{
 		return std::sqrt(this->normSqr());
 	};
 
 	/// NormSqr
-	T VectorX<T, N>::normSqr() const
+	T normSqr() const
 	{
 		auto ret = T();
 		for (int index = 0; index != N; ++index)
@@ -199,6 +229,18 @@ public:
 
 		return ret;
 	};
+
+	T distance(const VectorX<T, N>& rhs) const
+	{
+		auto ret = T();
+		for (int index = 0; index != N; ++index)
+		{
+			const T dist = this->operator[](index) - rhs[index];
+			ret += dist * dist;
+		}
+		return std::sqrt(ret);
+	}
+
 
 	// For debug (low performance)
 	std::ostream& print(std::ostream& ostr)
@@ -254,11 +296,51 @@ const VectorX<T, N> operator+(const sml::VectorX<T, N>& lhs, const sml::VectorX<
 }
 
 template<typename T, unsigned N>
+const VectorX<T, N> operator+(const sml::VectorX<T, N>& lhs, const T& rhs)
+{
+	VectorX<T, N> ret(lhs);
+
+	ret += rhs;
+
+	return ret;
+}
+
+template<typename T, unsigned N>
+const VectorX<T, N> operator+(const T& lhs, const sml::VectorX<T, N>& rhs)
+{
+	VectorX<T, N> ret(rhs);
+
+	ret += lhs;
+
+	return ret;
+}
+
+template<typename T, unsigned N>
 const VectorX<T, N> operator-(const sml::VectorX<T, N>& lhs, const sml::VectorX<T, N>& rhs)
 {
 	VectorX<T, N> ret(lhs);
 
 	ret -= rhs;
+
+	return ret;
+}
+
+template<typename T, unsigned N>
+const VectorX<T, N> operator-(const sml::VectorX<T, N>& lhs, const T& rhs)
+{
+	VectorX<T, N> ret(lhs);
+
+	ret -= rhs;
+
+	return ret;
+}
+
+template<typename T, unsigned N>
+const VectorX<T, N> operator-(const T& lhs, const sml::VectorX<T, N>& rhs)
+{
+	VectorX<T, N> ret(rhs);
+
+	ret -= lhs;
 
 	return ret;
 }
@@ -276,6 +358,16 @@ const VectorX<T, N> operator*(const sml::VectorX<T, N>& lhs, const T& rhs)
 template<typename T, typename T2, unsigned N> inline
 const VectorX<T, N> operator/(const sml::VectorX<T, N>& lhs, const T2& rhs)
 {
+	try
+	{
+		if (std::abs(rhs - 0) < std::numeric_limits<T>::epsilon())
+			throw std::string("VectorX<T, N> operator/(VectorX, T) Divided by zero !");
+	}
+	catch (const std::string& message)
+	{
+		std::cerr << message << std::endl;
+	}
+
 	sml::VectorX<T, N> ret(lhs);
 
 	ret /= rhs;
