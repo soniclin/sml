@@ -87,7 +87,7 @@ public:
 
 	/// Assignment operators
 
-	template<typename T2, size_type N2>
+	template<typename T2, std::array < T, N >::size_type N2>
 	VectorX<T, N>& operator=(const VectorX<T2, N2>& rhs)
 	{
 		Base::size_type d = N > N2 ? N : N2;
