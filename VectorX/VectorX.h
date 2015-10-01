@@ -87,12 +87,12 @@ public:
 
 	/// Assignment operators
 
-	template<typename T2, std::array < T, N >::size_type N2>
+	template<typename T2, std::size_t N2>
 	VectorX<T, N>& operator=(const VectorX<T2, N2>& rhs)
 	{
-		Base::size_type d = N > N2 ? N : N2;
+		std::size_t d = N > N2 ? N : N2;
 		auto iter = begin();
-		for (Base::size_type index = 0; index != d; ++index)
+		for (std::size_t index = 0; index != d; ++index)
 		{
 			*iter++ = rhs[index];
 		}
@@ -100,12 +100,12 @@ public:
 		return *this;
 	}
 
-	template<typename T2, Base::size_type N2>
+	template<typename T2, std::size_t N2>
 	VectorX<T, N>& operator+=(const VectorX<T2, N2>& rhs)
 	{
-		Base::size_type d = N > N2 ? N : N2;
+		std::size_t d = N > N2 ? N : N2;
 		auto iter = begin();
-		for (Base::size_type index = 0; index != d; ++index)
+		for (std::size_t index = 0; index != d; ++index)
 		{
 			*iter++ += rhs[index];
 		}
@@ -116,7 +116,7 @@ public:
 	VectorX<T, N>& operator+=(const T& rhs)
 	{
 		auto iter = begin();
-		for (Base::size_type index = 0; index != N; ++index)
+		for (std::size_t index = 0; index != N; ++index)
 		{
 			*iter++ += rhs;
 		}
@@ -124,12 +124,12 @@ public:
 		return *this;
 	}
 
-	template<typename T2, Base::size_type N2>
+	template<typename T2, std::size_t N2>
 	VectorX<T, N>& operator-=(const VectorX<T2, N2>& rhs)
 	{
-		Base::size_type d = N > N2 ? N : N2;
+		std::size_t d = N > N2 ? N : N2;
 		auto iter = begin();
-		for (Base::size_type index = 0; index != d; ++index)
+		for (std::size_t index = 0; index != d; ++index)
 		{
 			*iter++ -= rhs[index];
 		}
@@ -140,7 +140,7 @@ public:
 	VectorX<T, N>& operator-=(const T& rhs)
 	{
 		auto iter = begin();
-		for (Base::size_type index = 0; index != N; ++index)
+		for (std::size_t index = 0; index != N; ++index)
 		{
 			*iter++ -= rhs;
 		}
@@ -153,7 +153,7 @@ public:
 	VectorX<T, N>& operator*=(const T2& rhs)
 	{
 		auto iter = begin();
-		for (Base::size_type index = 0; index != N; ++index)
+		for (std::size_t index = 0; index != N; ++index)
 		{
 			*iter++ *= rhs;
 		}
@@ -181,7 +181,7 @@ public:
 		}
 
 		auto iter = begin();
-		for (Base::size_type index = 0; index != N; ++index)
+		for (std::size_t index = 0; index != N; ++index)
 		{
 			*iter++ /= rhs;
 		}
