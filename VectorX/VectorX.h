@@ -189,7 +189,7 @@ public:
 		return *this;
 	}
 
-	const VectorX<T, N> VectorX<T, N>::operator-() const
+	const VectorX<T, N> operator-() const
 	{
 		auto ret(*this);
 
