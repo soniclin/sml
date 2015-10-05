@@ -2,7 +2,7 @@
 #define MATH_H_H
 
 #include <cmath>
-#include "./VectorX/VectorX.hpp"
+#include "./VectorX/VectorX.h"
 
 namespace sml
 {
