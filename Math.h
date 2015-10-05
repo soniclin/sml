@@ -82,13 +82,9 @@ private:
 	}
 
 	
-
-	template<typename T, unsigned dimension>
-	static T shiftFrom(T& point, T& offset);
-
 	/// Shift
 	template<typename T, unsigned dimension> inline
-	T shift(int index, T& offset) 
+	VectorX<T, dimension>& shift (VectorX<T, dimension>& input, const std::size_t index, const T& offset)
 	{
 		try
 		{
@@ -102,21 +98,26 @@ private:
 			return 1;
 		}
 
-		return raw_data[index] + offset;
+		return input;
 	}
 
 	template<typename T, unsigned dimension> inline
-	VectorX<T, dimension> shift(T offsetX, T offsetY, T offsetZ) 
+	VectorX<T, dimension>& shift(VectorX<T, dimension>& input, const T& offset)
 	{
-		VectorX<T, dimension> ret;
-		ret[0] = offsetX+this->x();
-		ret[1] = offsetY+this->y();
-		ret[2] = offsetZ+this->z();
-		return ret;
+		for(auto& e : input)
+			e += offset;
+
+		return input;
 	}
 
 	template<typename T, unsigned dimension>
-	T shiftFrom(T& point, T& offset)
+	const T shift_from(const T& point, const T& offset)
+	{
+		return point + offset;
+	}
+
+	template<typename T, std::size_t dimension>
+	const VectorX<T, dimension> shift_from(const VectorX<T, dimension>& point, const T& offset)
 	{
 		return point + offset;
 	}
