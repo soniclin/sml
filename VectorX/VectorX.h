@@ -5,7 +5,7 @@
 #include <initializer_list>
 #include <array>
 #include <cmath>
-
+#include <limits>
 namespace sml
 {
 
