@@ -12,7 +12,9 @@ class Math
 {
 public:
 	
-	static const T& resetEps()
+	static bool eps_state;
+
+	static const T& reset_eps()
 	{
 		epsilon = 1;
 		while( (static_cast<T>(1)+epsilon) > static_cast<T>(1) )
@@ -27,6 +29,12 @@ public:
 
 	static const T& eps()
 	{
+		if (!eps_state)
+		{
+			reset_eps();
+			eps_state = true;
+		}
+
 		return epsilon;
 	}
 
@@ -49,7 +57,7 @@ private:
 
 	void initialize()
 	{
-		Math<T>::resetEps();
+		Math<T>::reset_eps();
 
 		Math<T>::pi_value = static_cast<T>(4. * std::atan(1.));
 	}
