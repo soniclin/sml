@@ -3,5 +3,5 @@
 
 #include "./VectorX/VectorX.h"
 #include "Math.h"
-
+ 
 #endif // S_M_L_H
