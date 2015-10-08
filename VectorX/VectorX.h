@@ -193,7 +193,7 @@ public:
 	{
 		auto ret(*this);
 
-		for (unsigned index = 0; index != N; ++index)
+		for (std::size_t index = 0; index != N; ++index)
 			ret[index] = -ret[index];
 
 		return ret;
@@ -208,7 +208,7 @@ public:
 	{
 		auto ret = T();
 
-		for (unsigned index = 0; index != N; ++index)
+		for (std::size_t index = 0; index != N; ++index)
 			ret += this->operator[](index) * rhs[index];
 
 		return ret;
@@ -246,7 +246,7 @@ public:
 	std::ostream& print(std::ostream& ostr)
 	{
 		ostr << "(";
-		for (unsigned index = 0; index != N; ++index)
+		for (std::size_t index = 0; index != N; ++index)
 		{
 			if (index != N - 1)
 				ostr << this->operator[](index) << ", ";
@@ -260,32 +260,32 @@ public:
 
 };
 
-template<typename T, unsigned N>
+template<typename T, std::size_t N>
 bool operator<(const sml::VectorX<T, N>& lhs, const sml::VectorX<T, N>&  rhs)
 {
 	return lhs.abs() < rhs.abs();
 }
 
-template<typename T, unsigned N>
+template<typename T, std::size_t N>
 bool operator<(const sml::VectorX<T, N>& lhs, const T& rhs)
 {
 	return lhs.abs() < rhs;
 }
 
-template<typename T, unsigned N>
+template<typename T, std::size_t N>
 bool operator>(const sml::VectorX<T, N>& lhs, const sml::VectorX<T, N>&  rhs)
 {
 	return lhs.abs() > rhs.abs();
 }
 
-template<typename T, unsigned N>
+template<typename T, std::size_t N>
 bool operator>(const sml::VectorX<T, N>& lhs, const T& rhs)
 {
 	return lhs.abs() > rhs;
 }
 
 /// Arithmetic operators
-template<typename T, unsigned N>
+template<typename T, std::size_t N>
 const VectorX<T, N> operator+(const sml::VectorX<T, N>& lhs, const sml::VectorX<T, N>& rhs)
 {
 	VectorX<T, N> ret(lhs);
@@ -295,7 +295,7 @@ const VectorX<T, N> operator+(const sml::VectorX<T, N>& lhs, const sml::VectorX<
 	return ret;
 }
 
-template<typename T, unsigned N>
+template<typename T, std::size_t N>
 const VectorX<T, N> operator+(const sml::VectorX<T, N>& lhs, const T& rhs)
 {
 	VectorX<T, N> ret(lhs);
@@ -305,7 +305,7 @@ const VectorX<T, N> operator+(const sml::VectorX<T, N>& lhs, const T& rhs)
 	return ret;
 }
 
-template<typename T, unsigned N>
+template<typename T, std::size_t N>
 const VectorX<T, N> operator+(const T& lhs, const sml::VectorX<T, N>& rhs)
 {
 	VectorX<T, N> ret(rhs);
@@ -315,7 +315,7 @@ const VectorX<T, N> operator+(const T& lhs, const sml::VectorX<T, N>& rhs)
 	return ret;
 }
 
-template<typename T, unsigned N>
+template<typename T, std::size_t N>
 const VectorX<T, N> operator-(const sml::VectorX<T, N>& lhs, const sml::VectorX<T, N>& rhs)
 {
 	VectorX<T, N> ret(lhs);
@@ -325,7 +325,7 @@ const VectorX<T, N> operator-(const sml::VectorX<T, N>& lhs, const sml::VectorX<
 	return ret;
 }
 
-template<typename T, unsigned N>
+template<typename T, std::size_t N>
 const VectorX<T, N> operator-(const sml::VectorX<T, N>& lhs, const T& rhs)
 {
 	VectorX<T, N> ret(lhs);
@@ -335,7 +335,7 @@ const VectorX<T, N> operator-(const sml::VectorX<T, N>& lhs, const T& rhs)
 	return ret;
 }
 
-template<typename T, unsigned N>
+template<typename T, std::size_t N>
 const VectorX<T, N> operator-(const T& lhs, const sml::VectorX<T, N>& rhs)
 {
 	VectorX<T, N> ret(rhs);
@@ -345,7 +345,7 @@ const VectorX<T, N> operator-(const T& lhs, const sml::VectorX<T, N>& rhs)
 	return ret;
 }
 
-template<typename T, unsigned N>
+template<typename T, std::size_t N>
 const VectorX<T, N> operator*(const sml::VectorX<T, N>& lhs, const T& rhs)
 {
 	sml::VectorX<T, N> ret(lhs);
@@ -355,7 +355,7 @@ const VectorX<T, N> operator*(const sml::VectorX<T, N>& lhs, const T& rhs)
 	return ret;
 }
 
-template<typename T, typename T2, unsigned N> inline
+template<typename T, typename T2, std::size_t N> inline
 const VectorX<T, N> operator/(const sml::VectorX<T, N>& lhs, const T2& rhs)
 {
 	try
@@ -375,21 +375,21 @@ const VectorX<T, N> operator/(const sml::VectorX<T, N>& lhs, const T2& rhs)
 	return ret;
 }
 
-template<typename T, unsigned N>
+template<typename T, std::size_t N>
 std::ostream& operator<<(std::ostream& ostr, const VectorX<T, N>& rhs)
 {
-	for (unsigned index = 0; index != N; ++index)
+	for (std::size_t index = 0; index != N; ++index)
 	{
 		ostr << rhs[index] << " ";
 	}
 	return ostr;
 }
 
-template<typename T, unsigned N>
+template<typename T, std::size_t N>
 std::ostream& print(std::ostream& ostr, const VectorX<T, N>& rhs)
 {
 	ostr << "(";
-	for (unsigned index = 0; index != N; ++index)
+	for (std::size_t index = 0; index != N; ++index)
 	{
 		if (index != N - 1)
 			ostr << rhs[index] << ", ";
@@ -399,10 +399,10 @@ std::ostream& print(std::ostream& ostr, const VectorX<T, N>& rhs)
 	return ostr;
 }
 
-template<typename T, unsigned N>
+template<typename T, std::size_t N>
 std::istream& operator>>(std::istream& istr, VectorX<T, N>& rhs)
 {
-	for (unsigned index = 0; index != N; ++index)
+	for (std::size_t index = 0; index != N; ++index)
 	{
 		istr >> rhs[index];
 	}
