@@ -21,7 +21,7 @@ namespace sml
 
 		Size(const std::initializer_list<std::size_t>& list)
 		{
-			const auto iter = list.cbegin();
+			const auto iter = list.begin();
 
 			for (std::size_t index = 0; index != DIMENSION; ++index)
 			{
