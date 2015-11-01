@@ -25,7 +25,7 @@ namespace sml
 
 			for (std::size_t index = 0; index != DIMENSION; ++index)
 			{
-				raw_data[index] = *iter++;
+				raw_data[index] = *(iter++);
 			}
 		}
 
