@@ -44,10 +44,6 @@ public:
 	using std::array<T, N>::swap;
 
 
-
-#pragma region Constructors
-
-
 	VectorX(const T& value = 0)
 	{
 		this->initialize(value);
@@ -73,8 +69,6 @@ public:
 			*iter = value;
 		}
 	}
-
-#pragma endregion
 
 	/// Return copy of self
 	VectorX<T, N> clone() const
