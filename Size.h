@@ -42,6 +42,7 @@ namespace sml
 			{
 				ret *= raw_data[index];
 			}
+			return ret;
 		}
 
 		const std::size_t& width() const
